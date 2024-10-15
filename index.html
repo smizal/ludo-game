@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <script defer src="./js/app.js"></script>
+    <title>Ludo Game - Unit1 Project</title>
+  </head>
+  <body>
+    <!-- game status box -->
+    <section class="game-controllers">
+      <button id="playersNo" name="4">Initialize with 4 players</button>
+      <button id="otherTurn">Play Other turn</button>
+      <button id="newGame">Start from zero, New Game</button>
+    </section>
+    <section class="game-status">
+      <div id="divDiceImage">
+        <img id="diceImage" src="./img/dice-main.png" alt="diceImage" />
+        <button id="diceBtn">Generate Number</button>
+      </div>
+      <div id="statusMsg">
+        <div id="scores">
+          <div id="green-status" class="players-scores green-status-bg">0</div>
+          <div id="yellow-status" class="players-scores yellow-status-bg">
+            0
+          </div>
+          <div id="blue-status" class="players-scores blue-status-bg">0</div>
+          <div id="red-status" class="players-scores red-status-bg">0</div>
+        </div>
+        <div id="gameMsg"></div>
+      </div>
+    </section>
+
+    <!-- The main board -->
+    <section class="board">
+      <!-- red home -->
+      <div class="home red-bg">
+        <div class="inner-circle">
+          <div class="home-button red-home-bg" id="red1"></div>
+          <div class="home-button red-home-bg" id="red2"></div>
+          <div class="home-button red-home-bg" id="red3"></div>
+          <div class="home-button red-home-bg" id="red4"></div>
+        </div>
+      </div>
+      <!-- green end space -->
+      <div class="vertical-space">
+        <div class="sqr" id="sqr50"></div>
+        <div class="sqr" id="sqr51"></div>
+        <div class="sqr" id="sqr52"></div>
+        <div class="sqr" id="sqr49"></div>
+        <div class="sqr green-bg" id="sqrg5"></div>
+        <div class="sqr green-bg" id="sqr1"></div>
+        <div class="sqr" id="sqr48"></div>
+        <div class="sqr green-bg" id="sqrg4"></div>
+        <div class="sqr" id="sqr2"></div>
+        <div class="sqr" id="sqr47"></div>
+        <div class="sqr green-bg" id="sqrg3"></div>
+        <div class="sqr" id="sqr3"></div>
+        <div class="sqr" id="sqr46"></div>
+        <div class="sqr green-bg" id="sqrg2"></div>
+        <div class="sqr" id="sqr4"></div>
+        <div class="sqr" id="sqr45"></div>
+        <div class="sqr green-bg" id="sqrg1"></div>
+        <div class="sqr" id="sqr5"></div>
+      </div>
+      <!-- green home -->
+      <div class="home green-bg">
+        <div class="inner-circle">
+          <div class="home-button green-home-bg" id="gb1"></div>
+          <div class="home-button green-home-bg" id="gb2"></div>
+          <div class="home-button green-home-bg" id="gb3"></div>
+          <div class="home-button green-home-bg" id="gb4"></div>
+        </div>
+      </div>
+      <!-- red end space -->
+      <div class="horizontal-space">
+        <div class="sqr" id="sqr39"></div>
+        <div class="sqr red-bg" id="sqr40"></div>
+        <div class="sqr" id="sqr41"></div>
+        <div class="sqr" id="sqr42"></div>
+        <div class="sqr" id="sqr43"></div>
+        <div class="sqr" id="sqr44"></div>
+        <div class="sqr" id="sqr38"></div>
+        <div class="sqr red-bg" id="sqrr5"></div>
+        <div class="sqr red-bg" id="sqrr4"></div>
+        <div class="sqr red-bg" id="sqrr3"></div>
+        <div class="sqr red-bg" id="sqrr2"></div>
+        <div class="sqr red-bg" id="sqrr1"></div>
+        <div class="sqr" id="sqr37"></div>
+        <div class="sqr" id="sqr36"></div>
+        <div class="sqr" id="sqr35"></div>
+        <div class="sqr" id="sqr34"></div>
+        <div class="sqr" id="sqr33"></div>
+        <div class="sqr" id="sqr32"></div>
+      </div>
+      <!-- color ends -->
+      <div class="end">
+        <!--  1st row -->
+        <div></div>
+        <div class="end-items green-end"></div>
+        <div class="end-items green-end"></div>
+        <div class="end-items green-end"></div>
+        <div></div>
+        <!-- 2nd row -->
+        <div class="end-items red-end"></div>
+        <div></div>
+        <div class="end-items green-end"></div>
+        <div></div>
+        <div class="end-items yellow-end"></div>
+        <!-- 3rd row -->
+        <div class="end-items red-end"></div>
+        <div class="end-items red-end"></div>
+        <div></div>
+        <div class="end-items yellow-end"></div>
+        <div class="end-items yellow-end"></div>
+        <!-- 4th row -->
+        <div class="end-items red-end"></div>
+        <div></div>
+        <div class="end-items blue-end"></div>
+        <div></div>
+        <div class="end-items yellow-end"></div>
+        <!-- 5th row -->
+        <div></div>
+        <div class="end-items blue-end"></div>
+        <div class="end-items blue-end"></div>
+        <div class="end-items blue-end"></div>
+        <div></div>
+      </div>
+      <!-- yellow end space -->
+      <div class="horizontal-space">
+        <div class="sqr" id="sqr6"></div>
+        <div class="sqr" id="sqr7"></div>
+        <div class="sqr" id="sqr8"></div>
+        <div class="sqr" id="sqr9"></div>
+        <div class="sqr" id="sqr10"></div>
+        <div class="sqr" id="sqr11"></div>
+        <div class="sqr yellow-bg" id="sqry1"></div>
+        <div class="sqr yellow-bg" id="sqry2"></div>
+        <div class="sqr yellow-bg" id="sqry3"></div>
+        <div class="sqr yellow-bg" id="sqry4"></div>
+        <div class="sqr yellow-bg" id="sqry5"></div>
+        <div class="sqr" id="sqr12"></div>
+        <div class="sqr" id="sqr18"></div>
+        <div class="sqr" id="sqr17"></div>
+        <div class="sqr" id="sqr16"></div>
+        <div class="sqr" id="sqr15"></div>
+        <div class="sqr yellow-bg" id="sqr14"></div>
+        <div class="sqr" id="sqr13"></div>
+      </div>
+      <!-- blue home -->
+      <div class="home blue-bg">
+        <div class="inner-circle">
+          <div class="home-button blue-home-bg"></div>
+          <div class="home-button blue-home-bg"></div>
+          <div class="home-button blue-home-bg"></div>
+          <div class="home-button blue-home-bg"></div>
+        </div>
+      </div>
+      <!-- blue end space -->
+      <div class="vertical-space">
+        <div class="sqr" id="sqr31"></div>
+        <div class="sqr blue-bg" id="sqrb1"></div>
+        <div class="sqr" id="sqr19"></div>
+        <div class="sqr" id="sqr30"></div>
+        <div class="sqr blue-bg" id="sqrb2"></div>
+        <div class="sqr" id="sqr20"></div>
+        <div class="sqr" id="sqr29"></div>
+        <div class="sqr blue-bg" id="sqrb3"></div>
+        <div class="sqr" id="sqr21"></div>
+        <div class="sqr" id="sqr28"></div>
+        <div class="sqr blue-bg" id="sqrb4"></div>
+        <div class="sqr" id="sqr22"></div>
+        <div class="sqr blue-bg" id="sqr27"></div>
+        <div class="sqr blue-bg" id="sqrb5"></div>
+        <div class="sqr" id="sqr23"></div>
+        <div class="sqr" id="sqr26"></div>
+        <div class="sqr" id="sqr25"></div>
+        <div class="sqr" id="sqr24"></div>
+      </div>
+      <!-- yellow home -->
+      <div class="home yellow-bg">
+        <div class="inner-circle">
+          <div class="home-button yellow-home-bg"></div>
+          <div class="home-button yellow-home-bg"></div>
+          <div class="home-button yellow-home-bg"></div>
+          <div class="home-button yellow-home-bg"></div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
