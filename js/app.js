@@ -36,7 +36,6 @@ const playersNoBtn = document.querySelector('#playersNo')
 const otherTurnBtn = document.querySelector('#otherTurn')
 const newGameBtn = document.querySelector('#newGame')
 
-console.log('playersNoBtn: ', playersNoBtn.innerHTML)
 /*-------------------------------- Functions --------------------------------*/
 
 const init = () => {
@@ -102,9 +101,6 @@ const initPlayers = () => {
   divDiceImage.className = `${color}-status-bg`
   playersNoBtn.name = playersNoBtn.name == '2' ? '4' : '2'
   playersNoBtn.innerHTML = `Initialize with ${playersNoBtn.name} players`
-
-  console.log(playersNoBtn)
-  console.log('initPlayers')
 }
 
 const initTurn = () => {
@@ -143,7 +139,7 @@ const updateMessage = (code = '', prevColor = '') => {
   } else if (code == 'clickDise') {
     message = `Click generate a number to go ${color}`
   } else if (code == 'meAgain') {
-    message = `I am Here again as second turn, I'm ${color}`
+    message = `I am here again as second turn, I'm ${color}`
   } else if (code == 'winner') {
     message = `Trust me, I'm '${color}' and i've won this turn`
   } else {
@@ -197,28 +193,12 @@ const checkFreeButtons = () => {
         let endingSqrs = freeBtns[i].ending
         if (remainSqrs + endingSqrs >= diceNumber) {
           foundFree = true
-          // if (remainSqrs >= 0) {
-          let test = document.querySelectorAll(
-            `#sqr${freeBtns[i].position}-${color}-btn`
-          )
-          console.log(test)
-
           document
             .querySelector(`#sqr${freeBtns[i].position}-${color}-btn`)
             .addEventListener('click', handleButtonClick)
           document.querySelector(
             `#sqr${freeBtns[i].position}-${color}-btn`
           ).style.cursor = 'pointer'
-          /* } else {
-            document
-              .querySelector(
-                `#sqr${turnColor[0]}${freeBtns[i].position}-${Color}-btn`
-              )
-              .addEventListener('click', handleButtonClick)
-            document.querySelector(
-              `#sqr${turnColor[0]}${freeBtns[i].position}-${Color}-btn`
-            ).style.cursor = 'pointer'
-          } */
         }
       }
     }
@@ -308,15 +288,10 @@ const movePlayerBtn = (clickedBtn) => {
     prevSqrBtn.removeChild(prevSqrBtn.firstElementChild)
 
     if (btnDetails.loop < diceNumber) {
-      console.log('btnDetails:', btnDetails)
-
       // check ending
       let newPosition = btnDetails.loop + btnDetails.ending - diceNumber
       let positionName = `${color[0]}${newPosition}`
       let sqrName = `#sqr${positionName}`
-      console.log('newPosition:', newPosition)
-      console.log('positionName:', positionName)
-      console.log('sqrName:', sqrName)
       if (newPosition > 0) {
         // new element id, name
         newElement.id = `sqr${positionName}-${color}-btn`
@@ -330,7 +305,6 @@ const movePlayerBtn = (clickedBtn) => {
         playersFreeButtons[color][btnIndex].ending = newPosition
         playersFreeButtons[color][btnIndex].loop = 0
         playersFreeButtons[color][btnIndex].position = `${positionName}`
-        console.log('playersFreeButtons:', playersFreeButtons[color][btnIndex])
       } else {
         // end reached
         changeEndButton()
@@ -339,7 +313,6 @@ const movePlayerBtn = (clickedBtn) => {
         playersFreeButtons[color][btnIndex].ending = 0
         playersFreeButtons[color][btnIndex].loop = 0
         playersFreeButtons[color][btnIndex].position = `finidhed`
-        console.log('playersFreeButtons:', playersFreeButtons[color][btnIndex])
       }
     } else {
       // check new position, update playersfreebuttons.loop
@@ -386,7 +359,6 @@ const checkOtherBtns = (sqrName) => {
 
 const changeEndButton = () => {
   let endHomes = document.querySelector(`.${color}-end`)
-  console.log(endHomes)
   endHomes.classList.remove(`${color}-end`)
   endHomes.classList.add(`${color}-end-bg`)
 }
@@ -411,6 +383,8 @@ const switchPlayerTurn = (sorry = '') => {
       } else {
         turn = (turn + 1) % 4
       }
+      color = playersSequence[turn]
+      updateMessage('clickDise')
     }
   } else if (diceNumber == 6) {
     if (sorry.founded) {
@@ -422,11 +396,9 @@ const switchPlayerTurn = (sorry = '') => {
     }
   }
 
-  color = playersSequence[turn]
   dice.disabled = false
   gameMsg.className = `players-scores ${color}-status-bg`
   divDiceImage.className = `${color}-status-bg`
-  console.log(color)
 }
 
 /*----------------------------- Event Listeners -----------------------------*/
