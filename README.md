@@ -31,6 +31,8 @@ Since my game is a **web based game**, so **no hardware** prerequisites needed a
 
 ### 2. Game rules
 
+[link to play it online](https://smizal.github.io/ludo-game/)
+
 Below are the rules for my Ludo game.
 
 - The game starts with two colors, each one having 4 pieces (buttons), you can shift it to be 4 players.
