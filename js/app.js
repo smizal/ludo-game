@@ -15,7 +15,6 @@ let scores = { green: 0, yellow: 0, blue: 0, red: 0 }
 let playersName = { green: '', yellow: '', blue: '', red: '' }
 // let gameMode = 0
 let playersFreeButtons = { green: [], yellow: [], blue: [], red: [] }
-//let playersEndButtons = { green: [], yellow: [], blue: [], red: [] }
 let diceNumber = 0
 let playersNumbers = 4
 let color = playersSequence[turn]
@@ -142,8 +141,8 @@ const updateMessage = (code = '', prevColor = '') => {
     message = `I am here again as second turn, I'm ${color}`
   } else if (code == 'winner') {
     message = `Trust me, I'm '${color}' and i've won this turn`
-  } else {
-    message = code
+  } else if (code == 'sorry') {
+    message = `Sorry, Go Home now, I'm ${color} and I'll play again`
   }
   gameMsg.textContent = message
 }
@@ -212,7 +211,6 @@ const handleButtonClick = (clickedBtn) => {
   checkForWinner()
   if (!winner) {
     switchPlayerTurn(sorry)
-    // updateMessage('clickDise')
   } else {
     scores[color]++
     document.querySelector(`.${color}-status-bg`).textContent = scores[color]
@@ -340,18 +338,26 @@ const movePlayerBtn = (clickedBtn) => {
 }
 
 const checkOtherBtns = (sqrName) => {
-  let sorry = { founded: false, color: '' }
+  let sorry = false
   let tempSqr = document.querySelector(sqrName).children
+  console.log(tempSqr[0])
   if (tempSqr.length) {
-    let btnColor = tempSqr[0].id.split('-')[1]
+    let details = tempSqr[0].id.split('-')
+    let btnColor = details[1]
+    let tempSqrName = details[0].substr(3)
     if (btnColor != color) {
-      sorry.founded = true
-      sorry.color = btnColor
+      sorry = true
       let homeSqr = document.querySelector(`.${btnColor}-home-token-btn`)
       homeSqr.classList.add(`${btnColor}-home-bg`)
       homeSqr.classList.remove(`${btnColor}-home-token-btn`)
       homeSqr.classList.remove('home-btns-token')
-      document.querySelector(`.${tempSqr[0].id}`).remove()
+      document.querySelector(`#${tempSqr[0].id}`).remove()
+
+      let btnIndex = playersFreeButtons[btnColor].findIndex((btn) => {
+        return btn.position == tempSqrName
+      })
+
+      playersFreeButtons[btnColor].splice(btnIndex, 1)
     }
   }
   return sorry
@@ -372,28 +378,18 @@ const checkForWinner = () => {
 
 // switch turn to next player
 const switchPlayerTurn = (sorry = '') => {
-  if (diceNumber != 6) {
-    if (sorry.founded) {
-      updateMessage(
-        `Sorry ${sorry.color} for kicking you out, it's my turn again`
-      )
+  if (sorry) {
+    updateMessage('sorry')
+  } else if (diceNumber != 6) {
+    if (playersNumbers === 2) {
+      turn = (turn + 2) % 4
     } else {
-      if (playersNumbers === 2) {
-        turn = (turn + 2) % 4
-      } else {
-        turn = (turn + 1) % 4
-      }
-      color = playersSequence[turn]
-      updateMessage('clickDise')
+      turn = (turn + 1) % 4
     }
+    color = playersSequence[turn]
+    updateMessage('clickDise')
   } else if (diceNumber == 6) {
-    if (sorry.founded) {
-      updateMessage(
-        `Sorry ${sorry.color} for kicking you out, it's my turn again`
-      )
-    } else {
-      updateMessage('meAgain')
-    }
+    updateMessage('meAgain')
   }
 
   dice.disabled = false
